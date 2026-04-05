@@ -378,13 +378,13 @@ function showVerdict() {
   document.getElementById('v-title').textContent = vd.title;
   document.getElementById('v-body').textContent = vd.body;
 
-  if (!document.getElementById('restart-btn')) {
-    const btn = document.createElement('button');
-    btn.className = 'restart-btn'; btn.id = 'restart-btn';
-    btn.textContent = 'Take it again';
-    btn.onclick = init;
-    v.appendChild(btn);
-  }
+ const oldBtn = document.getElementById('restart-btn');
+if (oldBtn) oldBtn.remove();
+const btn = document.createElement('button');
+btn.className = 'restart-btn'; btn.id = 'restart-btn';
+btn.textContent = 'Take it again';
+btn.onclick = init;
+v.appendChild(btn);
 }
 
 init();
