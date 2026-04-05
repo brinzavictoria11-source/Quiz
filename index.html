@@ -368,8 +368,8 @@ function showVerdict() {
   });
 
   let vd;
-  if (yesCount <= 2) vd = verdicts[0];
-  else if (yesCount <= 5) vd = verdicts[1];
+  if (yesCount <= 3) vd = verdicts[0];
+  else if (yesCount <= 6) vd = verdicts[1];
   else vd = verdicts[2];
 
   const band = document.getElementById('v-band');
