@@ -138,7 +138,6 @@
   .no-btn:hover { background: #F0EFF8; color: var(--text); border-color: #B0AECF; transform: translateY(-1px); }
   .no-btn:active { transform: scale(0.97); }
 
-  /* Verdict */
   .verdict { display: none; }
   .score-row {
     display: flex; align-items: baseline; gap: 8px; margin-bottom: 0.25rem;
@@ -231,7 +230,6 @@
   </div>
 
   <div class="card">
-    <!-- Quiz screen -->
     <div id="quiz">
       <div class="progress-row">
         <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
@@ -248,7 +246,6 @@
       </div>
     </div>
 
-    <!-- Verdict screen -->
     <div class="verdict" id="verdict">
       <div class="score-row">
         <div class="score-big" id="v-score"></div>
@@ -296,7 +293,7 @@ const verdicts = [
   {
     range: "6 – 8 yes answers",
     title: "Your answers show multiple signs associated with problematic social media use — especially distraction, loss of control, and interference with daily life.",
-    body: "You might be experiencing signs of social media addiction, it may be worth taking steps to set boundaries, like screen time limits or designated phone-free periods.",
+    body: "This doesn't mean you have an addiction, but it may be worth taking steps to set boundaries, like screen time limits or designated phone-free periods.",
     band: "coral"
   }
 ];
@@ -378,13 +375,13 @@ function showVerdict() {
   document.getElementById('v-title').textContent = vd.title;
   document.getElementById('v-body').textContent = vd.body;
 
- const oldBtn = document.getElementById('restart-btn');
-if (oldBtn) oldBtn.remove();
-const btn = document.createElement('button');
-btn.className = 'restart-btn'; btn.id = 'restart-btn';
-btn.textContent = 'Take it again';
-btn.onclick = init;
-v.appendChild(btn);
+  const oldBtn = document.getElementById('restart-btn');
+  if (oldBtn) oldBtn.remove();
+  const btn = document.createElement('button');
+  btn.className = 'restart-btn'; btn.id = 'restart-btn';
+  btn.textContent = 'Take it again';
+  btn.onclick = init;
+  v.appendChild(btn);
 }
 
 init();
