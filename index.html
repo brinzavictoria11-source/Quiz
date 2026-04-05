@@ -282,19 +282,19 @@ const questions = [
 
 const verdicts = [
   {
-    range: "0 – 3 yes answers",
+    range: "0 – 2 yes answers",
     title: "Your social media use shows few signs of problematic use based on this short check.",
     body: "You appear to have a relatively balanced relationship with social media. Keep being mindful of your habits.",
     band: "green"
   },
   {
-    range: "4 – 6 yes answers",
+    range: "3 – 5 yes answers",
     title: "Your answers show some signs that social media may be interfering with your attention and daily routines.",
     body: "It may be worth reflecting on how and when you use social media, and whether small changes could help you feel more in control.",
     band: "amber"
   },
   {
-    range: "7 – 8 yes answers",
+    range: "6 – 8 yes answers",
     title: "Your answers show multiple signs associated with problematic social media use — especially distraction, loss of control, and interference with daily life.",
     body: "You might be experiencing signs of social media addiction, it may be worth taking steps to set boundaries, like screen time limits or designated phone-free periods.",
     band: "coral"
@@ -368,8 +368,8 @@ function showVerdict() {
   });
 
   let vd;
-  if (yesCount <= 3) vd = verdicts[0];
-  else if (yesCount <= 6) vd = verdicts[1];
+  if (yesCount <= 2) vd = verdicts[0];
+  else if (yesCount <= 5) vd = verdicts[1];
   else vd = verdicts[2];
 
   const band = document.getElementById('v-band');
