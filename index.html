@@ -125,18 +125,19 @@
     border: 1.5px solid; transition: all 0.18s;
     letter-spacing: 0.01em;
   }
+  .choice-btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .yes-btn {
     background: var(--purple-light); color: var(--purple);
     border-color: var(--purple-mid);
   }
-  .yes-btn:hover { background: var(--purple); color: #fff; border-color: var(--purple); transform: translateY(-1px); }
-  .yes-btn:active { transform: scale(0.97); }
+  .yes-btn:hover:not(:disabled) { background: var(--purple); color: #fff; border-color: var(--purple); transform: translateY(-1px); }
+  .yes-btn:active:not(:disabled) { transform: scale(0.97); }
   .no-btn {
     background: transparent; color: var(--muted);
     border-color: #D1D0DF;
   }
-  .no-btn:hover { background: #F0EFF8; color: var(--text); border-color: #B0AECF; transform: translateY(-1px); }
-  .no-btn:active { transform: scale(0.97); }
+  .no-btn:hover:not(:disabled) { background: #F0EFF8; color: var(--text); border-color: #B0AECF; transform: translateY(-1px); }
+  .no-btn:active:not(:disabled) { transform: scale(0.97); }
 
   .verdict { display: none; }
   .score-row {
@@ -198,9 +199,7 @@
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .slide-in {
-    animation: fadeUp 0.35s ease both;
-  }
+  .slide-in { animation: fadeUp 0.35s ease both; }
 
   .footer {
     text-align: center; margin-top: 1.25rem;
@@ -241,8 +240,8 @@
         <div class="q-text" id="q-text"></div>
       </div>
       <div class="choices">
-        <button class="choice-btn yes-btn" onclick="answer(true)">Yes</button>
-        <button class="choice-btn no-btn" onclick="answer(false)">No</button>
+        <button class="choice-btn yes-btn" id="yes-btn" onclick="answer(true)">Yes</button>
+        <button class="choice-btn no-btn" id="no-btn" onclick="answer(false)">No</button>
       </div>
     </div>
 
@@ -298,10 +297,10 @@ const verdicts = [
   }
 ];
 
-let current = 0, yesCount = 0, answers = [];
+let current = 0, yesCount = 0, answers = [], locked = false;
 
 function init() {
-  current = 0; yesCount = 0; answers = [];
+  current = 0; yesCount = 0; answers = []; locked = false;
   const dots = document.getElementById('dots');
   dots.innerHTML = '';
   questions.forEach((_, i) => {
@@ -310,12 +309,17 @@ function init() {
     d.id = 'dot-' + i;
     dots.appendChild(d);
   });
+  document.getElementById('yes-btn').disabled = false;
+  document.getElementById('no-btn').disabled = false;
   document.getElementById('quiz').style.display = 'block';
   document.getElementById('verdict').style.display = 'none';
   showQ();
 }
 
 function showQ() {
+  locked = false;
+  document.getElementById('yes-btn').disabled = false;
+  document.getElementById('no-btn').disabled = false;
   document.getElementById('prog').style.width = (current / questions.length * 100) + '%';
   document.getElementById('prog-label').textContent = (current + 1) + ' / ' + questions.length;
   document.getElementById('q-index').textContent = 'Question ' + (current + 1);
@@ -333,6 +337,11 @@ function showQ() {
 }
 
 function answer(yes) {
+  if (locked) return;
+  locked = true;
+  document.getElementById('yes-btn').disabled = true;
+  document.getElementById('no-btn').disabled = true;
+
   answers.push(yes);
   if (yes) yesCount++;
   const d = document.getElementById('dot-' + current);
